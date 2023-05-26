@@ -29,11 +29,9 @@ r--;
 }
 info->linecount_flag = 1;
 remove_comments(*buf);
-build_history_list(info, *buf, info->histcount++;)
-{
+build_history_list(info, *buf, info->histcount++);
 *len = r;
 info->cmd_buf = buf;
-}
 }
 }
 return (r);
@@ -44,6 +42,7 @@ return (r);
  * Return: bytes read
  */
 ssize_t get_input(info_t *info)
+{
 static char *buf;
 static size_t i, j, len;
 ssize_t r = 0;
@@ -51,7 +50,9 @@ char **buf_p = &(info->arg), *p;
 _putchar(BUF_FLUSH);
 r = input_buf(info, &buf, &len);
 if (r == -1)
+{
 return (-1);
+}
 if (len)
 {
 j = i;
@@ -63,17 +64,17 @@ if (is_chain(info, buf, &j))
 break;
 j++;
 }
-i = j + 1; /* increment past nulled ';'' */
-if (i >= len) /* reached end of buffer? */
+i = j + 1;
+if (i >= len)
 {
-i = len = 0; /* reset position and length */
+i = len = 0;
 info->cmd_buf_type = CMD_NORM;
 }
 *buf_p = p; /* pass back pointer to current command position */
-return (_strlen(p)); /* return length of current command */
+return (_strlen(p));
 }
 *buf_p = buf; /* else not a chain, pass back buffer from _getline() */
-return (r); /* return length of buffer from _getline() */
+return (r);
 }
 /**
  * read_buf - reads a buffer

@@ -100,11 +100,9 @@ ptr = &buffer[49];
 do {
 *--ptr = array[n % base];
 n /= base;
-}
-while
-{
-(n != 0)
+} while (n != 0);
 if (sign)
+{
 *--ptr = sign;
 }
 return (ptr);
